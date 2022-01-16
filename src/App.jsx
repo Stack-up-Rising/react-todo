@@ -21,6 +21,8 @@ export const App = () => {
 
 	// 追加ボタンにonClickの処理を割り当てる。
 	const onClickAdd = () => {
+
+    // テキストボックスが空の状態で追加ボタンを押した際に処理を走らせないようにする。
 		if (todoText === '') return;
 
 		// 入力された値(todoText)を未完了のリスト(incompleteTodos)に追加する。

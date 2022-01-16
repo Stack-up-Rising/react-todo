@@ -6,13 +6,10 @@ export const App = () => {
 	const [todoText, setTodoText] = useState('');
 
 	// 未完了のTODOを格納する配列
-	const [incompleteTodos, setIncompleteTodos] = useState([
-		'ああああ',
-		'いいいい',
-	]);
+	const [incompleteTodos, setIncompleteTodos] = useState([]);
 
 	// 完了TODOのState化
-	const [completeTodos, setCompleteTodos] = useState(['うううう']);
+	const [completeTodos, setCompleteTodos] = useState([]);
 
 	// useStateの初期値が空文字なのでinputで変更があった際にStateも変更されるようにする処理。
 	// 仕組みとしては、入力された値が入り、setTodoText関数に渡るというもの。
@@ -35,7 +32,7 @@ export const App = () => {
 		setTodoText('');
 	};
 
-	// 削除ボタン押下した際の処理
+	// 削除ボタンを押下した際の処理
 	const onClickDelete = (index) => {
 		// 未完了TODO(incompleteTodos)から値を消すために新たに定数を定義
 		const newTodos = [...incompleteTodos];
@@ -44,8 +41,41 @@ export const App = () => {
 		// 第一引数(何番目の要素か？)と第二引数(いくつ削除するか？)を渡す。
 		newTodos.splice(index, 1);
 
-		// 未完了TODOをセットする関数(setIncompleteTodos)に先程定義したnewTodosを渡す。
+		// 未完了TODOをセットする関数(setIncompleteTodos)に先程定義したnewTodosを更新。
 		setIncompleteTodos(newTodos);
+	};
+
+	// 完了ボタンを押下した際の処理
+	const onClickComplete = (index) => {
+		// 完了ボタンを押すことで、未完了TODOから削除される。
+		const newIncompleteTodos = [...incompleteTodos];
+		newIncompleteTodos.splice(index, 1);
+
+		// 新しい完了TODOは、すでに存在する完了TODOの後ろに押された行(未完了TODOのindex番目)を取ってきて
+		// 新しい配列を生成する。
+		const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
+
+		//未完了TODOの関数を新たな未完了TODO(newIncompleteTodos)として更新。
+		setIncompleteTodos(newIncompleteTodos);
+
+		// 完了TODOを新たな完了TODO(newCompleteTodos)として更新。
+		setCompleteTodos(newCompleteTodos);
+	};
+
+	// 戻すボタンを押下した際の処理
+	const onClickBack = (index) => {
+		// 戻すボタンを押すことで、完了TODOから削除される。
+		const newCompleteTodos = [...completeTodos];
+		newCompleteTodos.splice(index, 1);
+
+		// 未完了TODOに追加(戻す)
+		const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+
+		// 完了TODOを新たな完了TODO(newCompleteTodos)として更新。
+		setCompleteTodos(newCompleteTodos);
+
+		//未完了TODOの関数を新たな未完了TODO(newIncompleteTodos)として更新。
+		setIncompleteTodos(newIncompleteTodos);
 	};
 
 	return (
@@ -65,7 +95,7 @@ export const App = () => {
 						return (
 							<div key={todo} className='list-row'>
 								<li>{todo}</li>
-								<button>完了</button>
+								<button onClick={() => onClickComplete(index)}>完了</button>
 								{/* アロー関数で表示しないと常に削除の処理を走らせてしまう。 */}
 								<button onClick={() => onClickDelete(index)}>削除</button>
 							</div>
@@ -76,11 +106,11 @@ export const App = () => {
 			<div className='complete-area'>
 				<p className='title'>完了のTODO</p>
 				<ul>
-					{completeTodos.map((todo) => {
+					{completeTodos.map((todo, index) => {
 						return (
 							<div key={todo} className='list-row'>
 								<li>{todo}</li>
-								<button>戻す</button>
+								<button onClick={() => onClickBack(index)}>戻す</button>
 							</div>
 						);
 					})}

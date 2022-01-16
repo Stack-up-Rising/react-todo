@@ -87,7 +87,15 @@ export const App = () => {
 				todoText={todoText}
 				onChange={onChangeTodoText}
 				onClick={onClickAdd}
+				disabled={incompleteTodos.length >= 5}
 			/>
+			{/* 未完了リストが5個になった際にpタグ内の文字列を表示する。 */}
+			{incompleteTodos.length >= 5 && (
+				<p style={{ color: 'red' }}>
+					登録できるTODOは5個までです。早めに消化して下さい。
+				</p>
+			)}
+
 			<IncompleteTodos
 				todos={incompleteTodos}
 				onClickComplete={onClickComplete}

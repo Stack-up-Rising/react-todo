@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './style.css';
+import { InputTodo } from './components/InputTodo';
+import { IncompleteTodos } from './components/IncompleteTodos';
+import { CompleteTodos } from './components/CompleteTodos';
 
 export const App = () => {
 	// 入力した値を追加ボタンを押下した際、incompleteTodosのリストに追加する処理
@@ -80,42 +83,17 @@ export const App = () => {
 
 	return (
 		<>
-			<div className='input-area'>
-				<input
-					placeholder='TODOを入力'
-					value={todoText}
-					onChange={onChangeTodoText}
-				/>
-				<button onClick={onClickAdd}>追加</button>
-			</div>
-			<div className='incomplete-area'>
-				<p className='title'>未完了のTODO</p>
-				<ul>
-					{incompleteTodos.map((todo, index) => {
-						return (
-							<div key={todo} className='list-row'>
-								<li>{todo}</li>
-								<button onClick={() => onClickComplete(index)}>完了</button>
-								{/* アロー関数で表示しないと常に削除の処理を走らせてしまう。 */}
-								<button onClick={() => onClickDelete(index)}>削除</button>
-							</div>
-						);
-					})}
-				</ul>
-			</div>
-			<div className='complete-area'>
-				<p className='title'>完了のTODO</p>
-				<ul>
-					{completeTodos.map((todo, index) => {
-						return (
-							<div key={todo} className='list-row'>
-								<li>{todo}</li>
-								<button onClick={() => onClickBack(index)}>戻す</button>
-							</div>
-						);
-					})}
-				</ul>
-			</div>
+			<InputTodo
+				todoText={todoText}
+				onChange={onChangeTodoText}
+				onClick={onClickAdd}
+			/>
+			<IncompleteTodos
+				todos={incompleteTodos}
+				onClickComplete={onClickComplete}
+				onClickDelete={onClickDelete}
+			/>
+			<CompleteTodos todo={completeTodos} onClickBack={onClickBack} />
 		</>
 	);
 };

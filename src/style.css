@@ -25,32 +25,33 @@ li {
 	margin-right: 8px;
 }
 
-.input-area {
+/* 以下コンポーネント化(CSS in JS)実施済みのためコメントアウト */
+/* .input-area {
 	background-color: #c1ffff;
 	width: 400px;
 	height: 30px;
 	padding: 8px;
 	margin: 8px;
 	border-radius: 8px;
-}
+} */
 
-.incomplete-area {
+/* .incomplete-area {
 	background-color: #c6ffe2;
 	width: 400px;
 	min-height: 200px;
 	padding: 8px;
 	margin: 8px;
 	border-radius: 8px;
-}
+} */
 
-.complete-area {
+/* .complete-area {
 	background-color: #ffffe0;
 	width: 400px;
 	min-height: 200px;
 	padding: 8px;
 	margin: 8px;
 	border-radius: 8px;
-}
+} */
 
 .title {
 	text-align: center;
